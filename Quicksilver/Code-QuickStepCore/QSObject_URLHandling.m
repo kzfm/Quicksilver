@@ -51,12 +51,10 @@
 	if(!image) {
         return;
     }
-    NSRect rect = NSMakeRect(0, 0, 128, 128);
-    [image setSize:[[image bestRepresentationForSize:rect.size] size]];
-    NSSize imageSize = [image size];
+    NSRect rect = NSMakeRect(0, 0, QSSizeMAX.width, QSSizeMAX.height);
     NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
-                                                                        pixelsWide:imageSize.width
-                                                                        pixelsHigh:imageSize.height
+                                                                        pixelsWide:rect.size.width
+                                                                        pixelsHigh:rect.size.height
                                                                      bitsPerSample:8
                                                                    samplesPerPixel:4
                                                                           hasAlpha:YES
@@ -77,7 +75,6 @@
     
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap]];
-    rect = NSMakeRect(0, 0, imageSize.width, imageSize.height);
     [image setSize:rect.size];
     [image drawInRect:rect fromRect:rectFromSize([image size]) operation:NSCompositeSourceOver fraction:1.0];
     NSImage *findImage = [NSImage imageNamed:@"Find"];
@@ -88,7 +85,7 @@
         favIcon = [self getFavIcon:[object objectForType:QSURLType]];
         if(favIcon) {
             [favIcon setSize:rect.size];
-            [favIcon drawInRect:NSMakeRect(rect.origin.x+NSWidth(rect)*0.48, rect.origin.y+NSWidth(rect)*0.32, 30, 30) fromRect:rect operation:NSCompositeSourceOver fraction:1.0];
+            [favIcon drawInRect:NSMakeRect(rect.origin.x+NSWidth(rect)*0.48, rect.origin.y+NSWidth(rect)*0.32, NSWidth(rect)/4, NSHeight(rect)/4) fromRect:rect operation:NSCompositeSourceOver fraction:1.0];
         }
         [findImage drawInRect:NSMakeRect(rect.origin.x+NSWidth(rect) *1/3, rect.origin.y, NSWidth(rect)*2/3, NSHeight(rect)*2/3) fromRect:rect operation:NSCompositeSourceOver fraction:1.0];
     }
