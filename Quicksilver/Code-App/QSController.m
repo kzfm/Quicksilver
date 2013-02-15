@@ -275,7 +275,7 @@ static QSController *defaultController = nil;
 			quitWindowController = [NSWindowController alloc];
 			[quitWindowController initWithWindowNibName:@"QuitConfirm" owner:quitWindowController];
 
-			quitWindow = (QSWindow *)[quitWindowController window];
+			quitWindow = (QSBorderlessWindow *)[quitWindowController window];
 			[quitWindow setLevel:kCGPopUpMenuWindowLevel+1];
 			[quitWindow setIgnoresMouseEvents:YES];
 			[quitWindow center];
@@ -300,9 +300,6 @@ static QSController *defaultController = nil;
 		}
 
 		if (shouldQuit) {
-			[(NSButton *)[quitWindow initialFirstResponder] setState:NSOnState];
-			[[(NSButton *)[quitWindow initialFirstResponder] alternateImage] setSize:QSSize128];
-			[quitWindow display];
 			[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.333]];
 			[quitWindow orderOut:self];
 			[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.50]];
